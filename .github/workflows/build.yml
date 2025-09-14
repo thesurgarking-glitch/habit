@@ -11,7 +11,8 @@ jobs:
       - uses: actions/checkout@v4
 
       - name: Get iPlug2
-        run: git clone --depth 1 https://github.com/iPlug2/iPlug2 ../iPlug2
+        run: |
+          git clone --recurse-submodules --depth 1 https://github.com/iPlug2/iPlug2 ../iPlug2
 
       - name: Configure
         run: cmake -Bbuild -S. -DIPLUG2_ROOT=../iPlug2 -DIPLUG2_TARGETS="VST3 AU APP" -G Ninja
