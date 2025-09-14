@@ -1,0 +1,22 @@
+name: Build OnwardHabit
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  build-mac:
+    runs-on: macos-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Get iPlug2
+        run: git clone --depth 1 https://github.com/iPlug2/iPlug2 ../iPlug2
+      - name: Configure
+        run: cmake -Bbuild -S. -DIPLUG2_ROOT=../iPlug2 -DIPLUG2_TARGETS="VST3 AU APP" -G Ninja
+      - name: Build
+        run: cmake --build build --config Release
+      - name: Upload
+        uses: actions/upload-artifact@v3
+        with:
+          name: OnwardHabit-mac
+          path: build/**
